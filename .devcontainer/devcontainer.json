@@ -7,7 +7,10 @@
 	"customizations": {
 		"vscode": {
 			"extensions": [
-				"esbenp.prettier-vscode"
+				"esbenp.prettier-vscode",
+				"dsznajder.es7-react-js-snippets",
+				"humao.rest-client",
+				"TabNine.tabnine-vscode"
 			]
 		}
 	}

@@ -3,11 +3,12 @@
 import { FormEvent, useState } from "react"
 import { useRouter } from "next/navigation"
 
-export default function NewPlaceForm() {
+export default function AddPlaceForm() {
   const [name, setName] = useState("")
+  const [borough, setBorough] = useState("")
   const [neighborhood, setNeighborhood] = useState("")
   const [cuisine, setCuisine] = useState("")
-  const [rating, setRating] = useState(0)
+  const [rating, setRating] = useState("")
   const [price, setPrice] = useState("")
 
   const router = useRouter()
@@ -21,6 +22,7 @@ export default function NewPlaceForm() {
       },
       body: JSON.stringify({
         name,
+        borough,
         neighborhood,
         cuisine,
         rating,
@@ -31,9 +33,10 @@ export default function NewPlaceForm() {
     console.log(await response.json())
 
     setName("")
+    setBorough("")
     setNeighborhood("")
     setCuisine("")
-    setRating(0)
+    setRating("")
     setPrice("")
 
     router.refresh()
@@ -41,7 +44,7 @@ export default function NewPlaceForm() {
   return (
     // We pass the event to the handleSubmit() function on submit.
     <form onSubmit={handleSubmit}>
-      <h3>Add a new place</h3>
+      <h3>Add a New Restaurant / Establishment</h3>
       <div>
         <label htmlFor="name">Name</label>
         <div>
@@ -50,6 +53,17 @@ export default function NewPlaceForm() {
             placeholder="Name"
             value={name}
             onChange={(e) => setName(e.target.value)}
+          />
+        </div>
+      </div>
+      <div>
+        <label htmlFor="borough">Borough</label>
+        <div>
+          <input
+            type="text"
+            placeholder="Borough"
+            value={borough}
+            onChange={(e) => setBorough(e.target.value)}
           />
         </div>
       </div>
@@ -80,21 +94,27 @@ export default function NewPlaceForm() {
         <div>
           <input
             type="number"
+            step="0.1"
             placeholder="Rating"
             value={rating}
-            onChange={(e) => setRating(e.target.valueAsNumber)}
+            onChange={(e) => setRating(e.target.value)}
           />
         </div>
       </div>
       <div>
         <label htmlFor="price">Price</label>
         <div>
-          <input
-            type="number"
+          <select
             placeholder="Price"
             value={price}
             onChange={(e) => setPrice(e.target.value)}
-          />
+          >
+            <option value="$">$</option>
+            <option value="$$">$$</option>
+            <option value="$$$">$$$</option>
+            <option value="$$$$">$$$$</option>
+            <option value="$$$$$">$$$$$</option>
+          </select>
         </div>
       </div>
       <button type="submit">Add Place</button>

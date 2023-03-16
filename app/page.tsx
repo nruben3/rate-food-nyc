@@ -1,7 +1,8 @@
 import "server-only"
 import { connect } from "mongoose"
 import Place, { IPlace } from "@/lib/models/place"
-import NewPlaceForm from "./components/form"
+import AddPlaceForm from "./components/AddPlaceForm"
+import PlacesList from "./components/PlacesList"
 
 async function getPlaces() {
   await connect(process.env.MONGODB_URI || "")
@@ -9,18 +10,12 @@ async function getPlaces() {
 }
 
 export default async function Home() {
-  const response = await getPlaces()
-  const places: IPlace[] = JSON.parse(response)
-
   return (
-    <>
-      <h1>Home</h1>
-      <NewPlaceForm />
-      <ul>
-        {places.map((place, index) => (
-          <li key={index}>{JSON.stringify(place)}</li>
-        ))}
-      </ul>
-    </>
+    <div>
+      <h1>Welcome to NYC Food Ratings</h1>
+      <AddPlaceForm />
+      {/* @ts-expect-error Server Component */}
+      <PlacesList />
+    </div>
   )
 }
