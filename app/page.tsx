@@ -1,18 +1,26 @@
-import 'server-only'
-import { connect } from 'mongoose'
-import Place, { IPlace } from '@/lib/models/place'
-import NewPlaceForm from './components/form'
+import "server-only"
+import { connect } from "mongoose"
+import Place, { IPlace } from "@/lib/models/place"
+import NewPlaceForm from "./components/form"
 
-export async function getPlaces() {
+async function getPlaces() {
   await connect(process.env.MONGODB_URI || "")
-  return (JSON.stringify(await Place.find()))
+  return JSON.stringify(await Place.find())
 }
 
 export default async function Home() {
+  const response = await getPlaces()
+  const places: IPlace[] = JSON.parse(response)
+
   return (
-    <div>
-      <p>{await getPlaces()}</p>
-      <NewPlaceForm></NewPlaceForm>
-    </div>
-  );
+    <>
+      <h1>Home</h1>
+      <NewPlaceForm />
+      <ul>
+        {places.map((place, index) => (
+          <li key={index}>{JSON.stringify(place)}</li>
+        ))}
+      </ul>
+    </>
+  )
 }
