@@ -2,6 +2,7 @@
 
 import { FormEvent, useState } from "react"
 import { useRouter } from "next/navigation"
+import cuisines from "../../config/cuisines.json"
 
 export default function AddPlaceForm() {
   const [name, setName] = useState("")
@@ -107,13 +108,18 @@ export default function AddPlaceForm() {
           Cuisine
         </label>
         <div>
-          <input
+          <select
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            type="text"
             placeholder="Cuisine"
             value={cuisine}
             onChange={(e) => setCuisine(e.target.value)}
-          />
+          >
+            {cuisines.map((cuisine, index) => (
+              <option key={index} value={cuisine}>
+                {cuisine}
+              </option>
+            ))}
+          </select>
         </div>
       </div>
       <div className="mb-4">

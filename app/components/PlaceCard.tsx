@@ -9,10 +9,10 @@ function PlaceCard(props: Props) {
   return (
     <div className="border rounded border-gray-500 shadow-md px-3 py-2">
       <ul>
-        <li>Name: {props.place.name}</li>
-        <li>Borough: {props.place.borough}</li>
-        <li>Neighborhood: {props.place.neighborhood}</li>
-        <li>Price: {props.place.price}</li>
+        <li className="font-bold">{props.place.name}</li>
+        <li>{props.place.borough}</li>
+        <li>{props.place.neighborhood}</li>
+        <li>{props.place.price}</li>
       </ul>
     </div>
   )
