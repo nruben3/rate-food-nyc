@@ -13,9 +13,9 @@ export default async function PlacesList() {
   const places: IPlace[] = JSON.parse(response)
 
   return (
-    <div>
-      <h3>Places</h3>
-      <div>
+    <div className="bg-white shadow-md rounded px-8 pt-6 pb-8 m-2">
+      <h3 className="block text-gray-700 text-xl font-bold mb-2">Places</h3>
+      <div className="grid gap-4 grid-cols-4">
         {places.map((place, index) => (
           <PlaceCard place={place} key={index} />
         ))}

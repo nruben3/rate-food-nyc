@@ -12,10 +12,14 @@ async function getPlaces() {
 export default async function Home() {
   return (
     <div>
-      <h1>Welcome to NYC Food Ratings</h1>
-      <AddPlaceForm />
-      {/* @ts-expect-error Server Component */}
-      <PlacesList />
+      <h3 className="block text-gray-700 text-3xl text-center font-bold m-1">
+        Welcome to NYC Food Ratings
+      </h3>
+      <div className="flex justify-center">
+        <AddPlaceForm />
+        {/* @ts-expect-error Server Component */}
+        <PlacesList />
+      </div>
     </div>
   )
 }

@@ -10,7 +10,8 @@
 				"esbenp.prettier-vscode",
 				"dsznajder.es7-react-js-snippets",
 				"humao.rest-client",
-				"TabNine.tabnine-vscode"
+				"TabNine.tabnine-vscode",
+				"bradlc.vscode-tailwindcss"
 			]
 		}
 	}

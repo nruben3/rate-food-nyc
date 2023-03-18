@@ -7,7 +7,7 @@ type Props = {
 
 function PlaceCard(props: Props) {
   return (
-    <div>
+    <div className="border rounded border-gray-500 shadow-md px-3 py-2">
       <ul>
         <li>Name: {props.place.name}</li>
         <li>Borough: {props.place.borough}</li>
