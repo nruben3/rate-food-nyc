@@ -3,18 +3,31 @@
 import { FormEvent, useState } from "react"
 import { useRouter } from "next/navigation"
 import cuisines from "../../config/cuisines.json"
+import boroughs from "../../config/boroughs.json"
 
-export default function AddPlaceForm() {
+interface Props {
+  neighborhoods: string
+}
+
+export default function AddPlaceForm(props: Props) {
+  const neighborhoods = JSON.parse(props.neighborhoods)
+
   const [name, setName] = useState("")
-  const [borough, setBorough] = useState("")
-  const [neighborhood, setNeighborhood] = useState("")
-  const [cuisine, setCuisine] = useState("")
+  const [borough, setBorough] = useState("Manhattan")
+  const [neighborhood, setNeighborhood] = useState("Alphabet City")
+  const [cuisine, setCuisine] = useState("Breakfast")
   const [rating, setRating] = useState("")
-  const [price, setPrice] = useState("")
+  const [price, setPrice] = useState("$")
+
+  const [validNeighborhoods, setValidNeighborhoods] = useState(
+    neighborhoods[borough]
+  )
 
   const router = useRouter()
   // Handles the submit event on form submit.
+
   const handleSubmit = async (event: FormEvent) => {
+    console.log(name, borough, neighborhood, cuisine, rating, price)
     event.preventDefault()
     const response = await fetch("/api/places", {
       method: "POST",
@@ -34,14 +47,15 @@ export default function AddPlaceForm() {
     console.log(await response.json())
 
     setName("")
-    setBorough("")
-    setNeighborhood("")
-    setCuisine("")
+    setBorough("Manhattan")
+    setNeighborhood("Alphabet City")
+    setCuisine("Breakfast")
     setRating("")
-    setPrice("")
+    setPrice("$")
 
     router.refresh()
   }
+
   return (
     // We pass the event to the handleSubmit() function on submit.
     <form
@@ -63,6 +77,7 @@ export default function AddPlaceForm() {
           type="text"
           placeholder="Name"
           value={name}
+          required
           onChange={(e) => setName(e.target.value)}
         />
       </div>
@@ -74,13 +89,22 @@ export default function AddPlaceForm() {
           Borough
         </label>
         <div>
-          <input
+          <select
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            type="text"
             placeholder="Borough"
             value={borough}
-            onChange={(e) => setBorough(e.target.value)}
-          />
+            onChange={(e) => {
+              setBorough(e.target.value)
+              setValidNeighborhoods(neighborhoods[e.target.value])
+              setNeighborhood(neighborhoods[e.target.value][0])
+            }}
+          >
+            {boroughs.map((borough, index) => (
+              <option key={index} value={borough}>
+                {borough}
+              </option>
+            ))}
+          </select>
         </div>
       </div>
       <div className="mb-4">
@@ -91,13 +115,18 @@ export default function AddPlaceForm() {
           Neighborhood
         </label>
         <div>
-          <input
+          <select
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            type="text"
             placeholder="Neighborhood"
             value={neighborhood}
             onChange={(e) => setNeighborhood(e.target.value)}
-          />
+          >
+            {validNeighborhoods.map((neighborhood: any, index: any) => (
+              <option key={index} value={neighborhood}>
+                {neighborhood}
+              </option>
+            ))}
+          </select>
         </div>
       </div>
       <div className="mb-4">
@@ -114,7 +143,7 @@ export default function AddPlaceForm() {
             value={cuisine}
             onChange={(e) => setCuisine(e.target.value)}
           >
-            {cuisines.map((cuisine, index) => (
+            {cuisines.sort().map((cuisine, index) => (
               <option key={index} value={cuisine}>
                 {cuisine}
               </option>
@@ -136,6 +165,7 @@ export default function AddPlaceForm() {
             step="0.1"
             placeholder="Rating"
             value={rating}
+            required
             onChange={(e) => setRating(e.target.value)}
           />
         </div>

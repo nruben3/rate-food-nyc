@@ -4,19 +4,37 @@ import Place, { IPlace } from "@/lib/models/place"
 import AddPlaceForm from "./components/AddPlaceForm"
 import PlacesList from "./components/PlacesList"
 
-async function getPlaces() {
-  await connect(process.env.MONGODB_URI || "")
-  return JSON.stringify(await Place.find())
+async function getNeighborhoods() {
+  const neighborhoods = {}
+  const response = await fetch(
+    `https://parseapi.back4app.com/classes/Nycapi_Neighborhood?limit=200`,
+    {
+      method: "GET",
+      headers: {
+        "X-Parse-Application-Id": process.env.PARSE_APP_ID || "", // This is your app's application id
+        "X-Parse-REST-API-Key": process.env.PARSE_API_KEY || "", // This is your app's REST API key
+      },
+    }
+  )
+  const data = await response.json()
+  for (let neighborhood of data.results) {
+    if (!neighborhoods[neighborhood.borough]) {
+      neighborhoods[neighborhood.borough] = []
+    }
+    neighborhoods[neighborhood.borough].push(neighborhood.name)
+  }
+
+  return JSON.stringify(neighborhoods)
 }
 
 export default async function Home() {
   return (
     <div>
       <h3 className="block text-gray-700 text-3xl text-center font-bold m-1">
-        Welcome to NYC Food Ratings
+        Noah and Becky&apos;s NYC Food Ratings
       </h3>
       <div className="flex justify-center">
-        <AddPlaceForm />
+        <AddPlaceForm neighborhoods={await getNeighborhoods()} />
         {/* @ts-expect-error Server Component */}
         <PlacesList />
       </div>

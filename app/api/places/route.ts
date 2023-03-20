@@ -21,7 +21,6 @@ export async function POST(request: Request) {
     console.log({ message: "Place saved" })
     return NextResponse.json({ message: `${new_place.name} was added.` })
   } catch (err: any) {
-    console.log(err)
     return new Response(err)
   }
 }
