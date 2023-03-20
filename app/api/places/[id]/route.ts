@@ -8,7 +8,7 @@ export async function GET(request: Request, { params }: any) {
   await connect(uri)
   const place = await Place.findOne({ _id: params.id })
   if (!place) {
-    return NextResponse.redirect("/404")
+    return NextResponse.json({ message: "Place not found" })
   }
   return NextResponse.json({ place })
 }
