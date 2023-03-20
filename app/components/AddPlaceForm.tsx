@@ -27,7 +27,6 @@ export default function AddPlaceForm(props: Props) {
   // Handles the submit event on form submit.
 
   const handleSubmit = async (event: FormEvent) => {
-    console.log(name, borough, neighborhood, cuisine, rating, price)
     event.preventDefault()
     const response = await fetch("/api/places", {
       method: "POST",
