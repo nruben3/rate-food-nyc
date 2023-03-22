@@ -9,6 +9,8 @@ export interface IPlace {
   cuisine: string
   rating: number
   price: String
+  highlights?: String[]
+  vibes?: String
 }
 
 // 2. Create a Schema corresponding to the document interface.
@@ -20,6 +22,8 @@ const placeSchema = new Schema<IPlace>(
     cuisine: { type: String, required: true },
     rating: { type: Number, required: true },
     price: { type: String, required: true },
+    highlights: { type: [String], required: false },
+    vibes: { type: String, required: false },
   },
   { versionKey: false }
 )

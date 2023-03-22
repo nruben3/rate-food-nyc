@@ -4,6 +4,7 @@ import { FormEvent, useState } from "react"
 import { useRouter } from "next/navigation"
 import cuisines from "../../config/cuisines.json"
 import boroughs from "../../config/boroughs.json"
+import TagsInput from "react-tagsinput"
 
 interface Props {
   neighborhoods: string
@@ -18,6 +19,8 @@ export default function AddPlaceForm(props: Props) {
   const [cuisine, setCuisine] = useState("Breakfast")
   const [rating, setRating] = useState("")
   const [price, setPrice] = useState("$")
+  const [highlights, setHighlights] = useState([])
+  const [vibes, setVibes] = useState("")
 
   const [validNeighborhoods, setValidNeighborhoods] = useState(
     neighborhoods[borough]
@@ -25,6 +28,10 @@ export default function AddPlaceForm(props: Props) {
 
   const router = useRouter()
   // Handles the submit event on form submit.
+
+  const handleChange = (tags) => {
+    setHighlights(tags)
+  }
 
   const handleSubmit = async (event: FormEvent) => {
     event.preventDefault()
@@ -40,6 +47,8 @@ export default function AddPlaceForm(props: Props) {
         cuisine,
         rating,
         price,
+        highlights,
+        vibes,
       }),
     })
 
@@ -51,6 +60,8 @@ export default function AddPlaceForm(props: Props) {
     setCuisine("Breakfast")
     setRating("")
     setPrice("$")
+    setHighlights([])
+    setVibes("")
 
     router.refresh()
   }
@@ -190,6 +201,42 @@ export default function AddPlaceForm(props: Props) {
             <option value="$$$$$">$$$$$</option>
           </select>
         </div>
+      </div>
+      <div className="mb-4">
+        <label
+          className="block text-gray-700 text-sm font-bold mb-2"
+          htmlFor="highlights"
+        >
+          Menu Highlights
+        </label>
+        <TagsInput
+          className="shadow appearance-none border rounded w-full py-4 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          value={highlights}
+          onChange={handleChange}
+          tagProps={{
+            className:
+              "bg-gray-200 text-gray-700 border border-gray-200 rounded py-2 px-3 leading-tight focus:outline-none focus:shadow-outline my-1 mr-1",
+          }}
+          inputProps={{
+            className:
+              "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline mt-4",
+            placeholder: "Add a Highlight",
+          }}
+        />
+      </div>
+      <div className="mb-4">
+        <label
+          className="block text-gray-700 text-sm font-bold mb-2"
+          htmlFor="vibes"
+        >
+          Vibes
+        </label>
+        <textarea
+          className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          placeholder="Vibes"
+          value={vibes}
+          onChange={(e) => setVibes(e.target.value)}
+        />
       </div>
       <button
         className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
