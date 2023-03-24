@@ -15,8 +15,11 @@ function PlaceCard(props: Props) {
         <li>{props.place.price}</li>
         <li>{props.place.rating}</li>
         <li>
-          {props.place.highlights.map((highlight, index) => {
-            if (index === props.place.highlights.length - 1) {
+          {props.place.highlights?.map((highlight, index) => {
+            if (
+              props.place.highlights?.length &&
+              index === props.place.highlights?.length - 1
+            ) {
               return <span key={index}>{highlight}</span>
             }
             return <span key={index}>{highlight}, </span>

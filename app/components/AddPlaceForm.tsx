@@ -29,7 +29,7 @@ export default function AddPlaceForm(props: Props) {
   const router = useRouter()
   // Handles the submit event on form submit.
 
-  const handleChange = (tags) => {
+  const handleChange = (tags: any) => {
     setHighlights(tags)
   }
 
