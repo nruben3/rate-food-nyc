@@ -26,8 +26,8 @@ async function getNeighborhoods() {
     updatedAt: string
   }
   const data: any = await response.json()
-  const results: Neighborhood[] = data.results
-  for (const [name, neighborhood] of Object.entries(results)) {
+  const results: Neighborhood[] = data.results || []
+  for (const neighborhood of results) {
     if (!neighborhoods[neighborhood.borough]) {
       neighborhoods[neighborhood.borough] = []
     }
