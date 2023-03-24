@@ -23,7 +23,7 @@ export default function AddPlaceForm(props: Props) {
   const [vibes, setVibes] = useState("")
 
   const [validNeighborhoods, setValidNeighborhoods] = useState(
-    neighborhoods[borough]
+    neighborhoods[borough] || []
   )
 
   const router = useRouter()
