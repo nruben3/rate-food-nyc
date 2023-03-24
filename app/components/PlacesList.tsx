@@ -4,7 +4,11 @@ import Place, { IPlace } from "@/lib/models/place"
 import PlaceCard from "./PlaceCard"
 
 async function getPlaces() {
-  await connect(process.env.MONGODB_URI || "")
+  try {
+    await connect(process.env.MONGODB_URI || "")
+  } catch (e: any) {
+    return e
+  }
   return JSON.stringify(await Place.find())
 }
 
