@@ -5,7 +5,7 @@ import AddPlaceForm from "./components/AddPlaceForm"
 import PlacesList from "./components/PlacesList"
 
 async function getNeighborhoods() {
-  const neighborhoods = {}
+  const neighborhoods: any = {}
   const response = await fetch(
     `https://parseapi.back4app.com/classes/Nycapi_Neighborhood?limit=200`,
     {
