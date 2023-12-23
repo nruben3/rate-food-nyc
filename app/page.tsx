@@ -3,6 +3,7 @@ import { connect } from "mongoose"
 import Place, { IPlace } from "@/lib/models/place"
 import AddPlaceForm from "./components/AddPlaceForm"
 import PlacesList from "./components/PlacesList"
+import Header from "./components/Header"
 
 async function getNeighborhoods() {
   const neighborhoods: any = {}
@@ -40,6 +41,7 @@ async function getNeighborhoods() {
 export default async function Home() {
   return (
     <div>
+      <Header></Header>
       <h3 className="block text-gray-700 text-3xl text-center font-bold m-1">
         Noah and Becky&apos;s NYC Food Ratings
       </h3>
